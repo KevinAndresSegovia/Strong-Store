@@ -1,13 +1,24 @@
-import React from 'react'
-import carrito from '../assets/carrito.svg'
+import { Button } from "@chakra-ui/react";
+import { useContext } from "react";
+import { CartContext } from "../contexts/ShoppingCartContext";
 
 const CartWidget = () => {
-  return (
-      <div>
-      <img src={carrito} className="carrito" alt="carrito" />
-      <p>0</p>
-      </div>
-  )
-}
+  const [cart, setCart] = useContext(CartContext);
 
-export default CartWidget
+  const quantity = cart.reduce((acc, curr) => {
+    return acc + curr.quantity;
+  }, 0);
+
+  return (
+    <>
+      <div className="cart">
+        <Button size="lg" variant="solid" colorScheme="green">
+          <span className="material-symbols-outlined">Carrito</span>
+          <span>{": " + quantity}</span>
+        </Button>
+      </div>
+    </>
+  );
+};
+
+export default CartWidget;
